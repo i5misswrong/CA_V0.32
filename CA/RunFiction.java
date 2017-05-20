@@ -6,7 +6,7 @@ public class RunFiction {
 		Rule rule=new Rule();
 		DrawFirst DF=new DrawFirst();
 		int m=data.M;
-		int peopleNumber=20;//行人总数
+		int peopleNumber=120;//行人总数
 		int viewNumber=2;//记忆点总数
 		int h=0;
 		Block B[][]=new Block[m][m];//所有方块矩阵
@@ -110,7 +110,7 @@ public class RunFiction {
 				}
 			}
 			 try {
-	             Thread.sleep(1000);
+	             Thread.sleep(500);
 	         } catch (Exception e) {
 	             e.printStackTrace();
 	         }

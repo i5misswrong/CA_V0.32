@@ -3,7 +3,7 @@ package CA;
 public class Data {
 	int M=50;
 	int EXIT_X=0;
-	int EXIT_Y=10;
+	int EXIT_Y=25;
 	int VIEW_ANGLE=30;
 	int VIEW_RANGE=30;
 	int LOGO_PEOPLE=1;
