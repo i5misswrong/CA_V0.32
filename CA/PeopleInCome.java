@@ -9,30 +9,23 @@ public class PeopleInCome {
 	Data data=new Data();
 	int m=data.M;
 	//-----------------计算行人与行人的收益-----------------------
-	public ArrayList<Direction> countPeoInCome(Block B[][],int dx,int dy){
-		ArrayList<Direction> peoInCome=new ArrayList<Direction>();
-		Map<Integer,Double> pni=new HashMap<Integer,Double>();
-		Map<Integer,Double> pdi=new HashMap<Integer,Double>();
+	public Map countPeoInCome(Block B[][],int dx,int dy){
+//		ArrayList<Direction> peoInCome=new ArrayList<Direction>();
+		Map<Integer,Double> peoInCome=new HashMap<>();//行人总收益
+		Map<Integer,Double> pni=new HashMap<Integer,Double>();//行人数量收益
+		Map<Integer,Double> pdi=new HashMap<Integer,Double>();//行人方向收益
 		for(int i=0;i<10;i++){
-			pni.put(i,0.0);
+			pni.put(i,0.0);//初始化
 			pdi.put(i,0.0);
 		}
-		int peopleNumber=0;
 		for(int i=0;i<m;i++){
 			for(int j=0;j<m;j++){
 				if(B[i][j].logo==data.LOGO_PEOPLE){
-					peopleNumber++;
-				}
-			}
-		}
-		for(int i=0;i<m;i++){
-			for(int j=0;j<m;j++){
-				if(B[i][j].logo==data.LOGO_PEOPLE){
-					double parallel=j-dy;
-					double vertical=i-dx;
+					double parallel=j-dy;//与其他人的水平距离
+					double vertical=i-dx;//与其他人的垂直距离
 					if(Math.sqrt(parallel*parallel+vertical*vertical)<data.VIEW_RANGE){//如果在视野范围内
-						int quadrat=judeQuadrat(parallel, vertical);
-						double theta=countAngelPeopleAndExit(quadrat, parallel, vertical);
+						int quadrat=judeQuadrat(parallel, vertical);//判断与其他人的象限
+						double theta=countAngelPeopleAndExit(quadrat, parallel, vertical);//计算与其他人的角度
 						int othersA=judgeAngleAndTheta(theta);//行人数量收益
 						switch (othersA) {
 						case 1:
@@ -103,13 +96,10 @@ public class PeopleInCome {
 			}
 			
 		}
-		for(int j=0;j<pdi.size();j++){
-			Direction dir=new Direction();//相加，存入list
-			dir.setDirection(j);
-			dir.setInCome((pni.get(j)+pdi.get(j))/peopleNumber/5+(Math.random())*0.0001);
-			peoInCome.add(dir);
+		for(int i=0;i<10;i++){//将收益加起来
+			peoInCome.put(i,(pni.get(i)+pdi.get(i))/(data.VIEW_RANGE*data.VIEW_RANGE));
 		}
-		return peoInCome;
+		return peoInCome;//返回行人收益map
 		
 		
 	}

@@ -15,7 +15,7 @@ public class DrawFirst {
 	public DrawFirst(){
 		jf=new JFrame("CA");
 		jp=new JPanel[m][m];
-		jf.setLayout(new GridLayout(m, m,5,5));
+		jf.setLayout(new GridLayout(m, m,0,0));
 		for(int i=0;i<m;i++){
 			for(int j=0;j<m;j++){
 				jp[i][j]=new JPanel();
@@ -25,7 +25,8 @@ public class DrawFirst {
 		}
 		jf.setTitle("CA_V0.32");
 		jf.setVisible(true);
-		jf.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//		jf.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		jf.setSize(400, 400);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
@@ -35,22 +36,28 @@ public class DrawFirst {
 				int logo=B[i][j].logo;
 				switch (logo) {
 				case 1://people
-					jp[i][j].setBackground(Color.blue);
+					if(B[i][j].clock){
+						jp[i][j].setBackground(Color.blue);
+					}
+					else{
+						jp[i][j].setBackground(Color.ORANGE);
+					}
+					
 					break;
 				case 0:// null
 					jp[i][j].setBackground(Color.white);
 					break;
 				case 10://wall
-					jp[i][j].setBackground(Color.PINK);
+					jp[i][j].setBackground(Color.black);
 					break;
 				case 100://exit
-					jp[i][j].setBackground(Color.DARK_GRAY);
+					jp[i][j].setBackground(Color.WHITE);
 					break;
 				case 50://view point
 					jp[i][j].setBackground(Color.GREEN);
 					break;
 				default:
-					jp[i][j].setBackground(Color.BLACK);
+					jp[i][j].setBackground(Color.CYAN);
 					break;
 				}
 			}

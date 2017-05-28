@@ -9,6 +9,7 @@ public class ViewInCome {
 	Data data=new Data();
 	int exitX=data.EXIT_X;
 	int exitY=data.EXIT_Y;
+	int m=data.M;
 	//------------判断出口在第几象限-------------------------
 	public int judeQuadrat(double parallel,double vertical){
 		int quadrat=0;
@@ -198,43 +199,54 @@ public class ViewInCome {
 		return viewInComeCom;
 	}
 	//------------------将视野角加起来---------------------------
-	public ArrayList addViemInCome(Map<Integer,Double> viewInCome1,Map<Integer,Double> viewInCome2,Map<Integer,Double> viewInComeCom,Map<Integer,Double> seeExitInCome){
-		ArrayList<Direction> viewInComeAll=new ArrayList<>();
-		for(int i=0;i<viewInCome1.size();i++){
-			Direction dir=new Direction();
-			dir.setDirection(i);
-			dir.setInCome(viewInCome1.get(i)+viewInCome2.get(i)+viewInComeCom.get(i)+(Math.random())*0.0001);
-			viewInComeAll.add(dir);
+	public Map addViemInCome(Map<Integer,Double> viewInCome1,Map<Integer,Double> viewInCome2,Map<Integer,Double> viewInComeCom,Map<Integer,Double> seeExitInCome){
+		Map<Integer,Double> viewInComeAll=new HashMap<>();
+		for(int i=0;i<10;i++){
+			viewInComeAll.put(i,viewInCome1.get(i)+viewInCome2.get(i)+viewInComeCom.get(i)+(Math.random())*0.0001);
 		}
 		return viewInComeAll;
 	}
 	//---------------------将map转化为list 向外输出----------------------
-	public ArrayList<Direction> outPutDirection(int px,int py){
+	public Map outPutDirection(Block B[][],int px,int py){
 		Map<Integer,Double> viewInCome1=new HashMap<Integer,Double>();
 		Map<Integer,Double> viewInCome2=new HashMap<Integer,Double>();
 		Map<Integer,Double> viewInComeCom=new HashMap<Integer,Double>();
 		Map<Integer,Double> seeExitInCome=new HashMap<Integer,Double>();
 		
-		ArrayList<Direction> viewInComeAll=new ArrayList<>();
-		ArrayList<Direction> inComeAll=new ArrayList<>();
-		ArrayList<Direction> peoInComeAll=new ArrayList<>();
-		for(int i=0;i<10;i++){
+		Map<Integer,Double> viewInComeAll=new HashMap<Integer,Double>();
+		boolean flag=false;//判断是否遇到记忆点
+		for(int i=0;i<10;i++){//收益map的初始化
 			viewInCome1.put(i, 0.0);
 			viewInCome2.put(i, 0.0);
 			viewInComeCom.put(i, 0.0);
 			seeExitInCome.put(i, 0.0);
+			viewInComeAll.put(i, 0.0);
 		}
-		double parallel=exitY-py;
-		double vertical=exitX-px;
-		int quadrat=judeQuadrat(parallel, vertical);
-		double theta=countAnglePeopleAndExit(quadrat, parallel, vertical);
-		double theta1=anticlock(theta);
-		double theta2=clock(theta);
-		viewInCome1=countTheta1(theta1, viewInCome1);
-		viewInCome2=countTheta2(theta2, viewInCome2);
-		viewInComeCom=isCompleteInTheta(theta1, theta2, viewInComeCom);
-		viewInComeAll=addViemInCome(viewInCome1, viewInCome2, viewInComeCom, seeExitInCome);
-		
-		return viewInComeAll;
+		for(int i=0;i<m;i++){
+			for(int j=0;j<m;j++){
+				if(B[i][j].logo==data.LOGO_VIEW){
+					int vx=Math.abs(i-px);
+					int vy=Math.abs(j-py);
+					if(Math.sqrt(vx*vx+vy*vy)<data.VIEW_RANGE){//如果行人与记忆点的距离小于视野半径
+						flag=true;//改为TRUE
+						B[px][py].setSeeView(true);//改为TRUE
+					}
+				}
+			}
+		}
+		if(flag){//如果见过记忆点了
+			double parallel=exitY-py;//与出口的水平距离
+			double vertical=exitX-px;//与出口的垂直距离
+			int quadrat=judeQuadrat(parallel, vertical);//判断出口位于行人的第几象限
+			double theta=countAnglePeopleAndExit(quadrat, parallel, vertical);//计算与出口的角度
+			B[px][py].setRealAngle(theta);//将角度存入realAngle
+			double theta1=anticlock(theta);//得到逆时针后的角度
+			double theta2=clock(theta);//得到顺时针后的角度
+			viewInCome1=countTheta1(theta1, viewInCome1);//得到逆时针后的收益
+			viewInCome2=countTheta2(theta2, viewInCome2);//得到顺时针后的收益
+			viewInComeCom=isCompleteInTheta(theta1, theta2, viewInComeCom);//得到完全位于k1k2中间的收益
+			viewInComeAll=addViemInCome(viewInCome1, viewInCome2, viewInComeCom, seeExitInCome);//将所有收益加起来
+		}
+		return viewInComeAll;//返回收益map
 	}
 }

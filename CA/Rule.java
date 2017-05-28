@@ -71,7 +71,7 @@ public class Rule {
 		boolean flag=false;
 		while(isCrashOthers(B, dx,dy,arrAll.get(h).getDirection())){//遍历集合，直到找出一个可以移动的方向
 			h++;
-			if(h>3){
+			if(h>2){
 				flag=true;//如果8次之后还没找到，结束循环
 				break;
 			}
