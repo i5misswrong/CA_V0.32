@@ -169,7 +169,7 @@ public class Common {
 			for(int j=0;j<data.M;j++){
 				if(B[i][j].logo==data.LOGO_EXIT){
 					double ex=data.EXIT_X-dx;
-					double ey=data.EXIT_Y-dy;
+					double ey=data.EXIT_Y_HALF-dy;
 					if(Math.sqrt(ex*ex+ey*ey)<data.VIEW_RANGE){
 						flag=true;
 					}
@@ -185,7 +185,7 @@ public class Common {
 			for(int j=0;j<data.M;j++){
 				if(B[i][j].logo==data.LOGO_EXIT){
 					double ex=data.EXIT_X-dx;
-					double ey=data.EXIT_Y-dy;
+					double ey=data.EXIT_Y_HALF-dy;
 					if(Math.sqrt(ex*ex+ey*ey)<data.VIEW_RANGE){
 						B[dx][dy].setSeeExit(true);
 					}

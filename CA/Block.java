@@ -13,7 +13,7 @@ public class Block {
 	boolean isSeeExit;//行人是否看到过出口，false为没见过，TRUE为见过
 	double isChangeClock;//行人是否已经改变过方向偏好 false为没改过 TRUE为改过
 						//isChangeClock只对行人产生的方向偏好有关 与记忆点收益无关
-	boolean isChangeClockView;
+	double isChangeClockView;
 	public Block(int logo) {
 		
 		this.logo=logo;
@@ -73,10 +73,11 @@ public class Block {
 		this.isSeeExit = isSeeExit;
 	}
 	
-	public boolean isChangeClockView() {
+	
+	public double getIsChangeClockView() {
 		return isChangeClockView;
 	}
-	public void setChangeClockView(boolean isChangeClockView) {
+	public void setIsChangeClockView(double isChangeClockView) {
 		this.isChangeClockView = isChangeClockView;
 	}
 	public double getIsChangeClock() {

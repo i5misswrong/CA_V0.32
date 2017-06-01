@@ -26,10 +26,12 @@ public class DrawFirst {
 		jf.setTitle("CA_V0.32");
 		jf.setVisible(true);
 //		jf.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		jf.setSize(400, 400);
+		jf.setSize(600, 600);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
+//	public void close(){
+//		jf.EXIT_ON_CLOSE;
+//	}
 	public void onColor(Block B[][]){
 		for(int i=0;i<m;i++){
 			for(int j=0;j<m;j++){

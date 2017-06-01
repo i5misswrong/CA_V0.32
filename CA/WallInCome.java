@@ -17,8 +17,11 @@ public class WallInCome {
 		}
 		int howWall=judgeWallArea(dx, dy);//行人位于那个墙附近
 		if(howWall!=1){//如果不是最下面的墙
-			if(B[dx][dy].isSeeView ){//如果看见过记忆点
-				countClockInComeWithView(B, dx, dy);//使用记忆点--方向偏好收益
+			if(isInRange(B, dx, dy) ){//如果看见过记忆点
+				//if(B[dx][dy].isChangeClockView<=3){
+					countClockInComeWithView(B, dx, dy);//使用记忆点--方向偏好收益
+				//}
+				
 			}
 			else{
 				countClockInComeWithPeople(B, dx, dy);//使用行人--方向偏好收益
@@ -189,7 +192,7 @@ public class WallInCome {
 					}
 					break;
 				}
-				B[dx][dy].setChangeClockView(true);// 表示已经见过记忆点 并且设置了方向偏好
+				B[dx][dy].setIsChangeClockView(B[dx][dy].getIsChangeClockView()+1);// 表示已经见过记忆点 并且设置了方向偏好
 			}
 	}
 	//----------------------计算行人--方向偏好收益--------------------
@@ -261,12 +264,13 @@ public class WallInCome {
 			probably=0.1;
 		}
 		else{
-			probably=otherN/(otherM-1) +romTen;
+			probably=otherN/(otherM) ;//+romTen;
+			if(probably>0.8){//如果大于0.5
+				B[dx][dy].setIsChangeClock(B[dx][dy].getIsChangeClock()+1);//次数+1
+				B[dx][dy].setClock(!B[dx][dy].isClock());//改变偏好
+			}
 		}
-		if(probably>0.5){//如果大于0.5
-			B[dx][dy].setIsChangeClock(B[dx][dy].isChangeClock++);//次数+1
-			B[dx][dy].setClock(!B[dx][dy].isClock());//改变偏好
-		}
+		
 	}
 	//--------------判断行人在哪个墙附近---------------------
 	public int judgeWallArea(int dx,int dy){
@@ -306,13 +310,30 @@ public class WallInCome {
 				for(int j=0;j<data.M;j++){
 					if(B[i][j].logo==data.LOGO_EXIT){
 						double ex=data.EXIT_X-dx;
-						double ey=data.EXIT_Y-dy;
+						double ey=data.EXIT_Y_HALF-dy;
 						if(Math.sqrt(ex*ex+ey*ey)<data.VIEW_RANGE){
 							flag=true;
 						}
 					}
 				}
 			}
+			return flag;
+		}
+		//-----------------检查是否在记忆点附近-----------------
+		public boolean isInRange(Block B[][],int dx,int dy){
+			boolean flag=false;
+			for(int i=0;i<data.M;i++){
+				for(int j=0;j<data.M;j++){
+					if(B[i][j].logo==data.LOGO_VIEW){
+						double parallel=j-dy;
+						double vertical=i-dx;
+						if((Math.sqrt(parallel*parallel+vertical*vertical)<data.VIEW_RANGE)){
+							flag=true;
+						}
+					}
+				}
+			}
+			
 			return flag;
 		}
 }

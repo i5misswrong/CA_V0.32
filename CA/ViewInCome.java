@@ -8,7 +8,7 @@ public class ViewInCome {
 	//计算视野收益的方法
 	Data data=new Data();
 	int exitX=data.EXIT_X;
-	int exitY=data.EXIT_Y;
+	int exitY=data.EXIT_Y_HALF;
 	int m=data.M;
 	//------------判断出口在第几象限-------------------------
 	public int judeQuadrat(double parallel,double vertical){

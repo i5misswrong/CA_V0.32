@@ -2,13 +2,20 @@ package CA;
 
 public class Data {
 	int M=50;
-	int PEOPLE_NUMBER=120;
-
+	
+	double PEOPLE_DENSITY=0.9;
+	int sh=19;
+	int PEOPLE_NUMBER=(int) (M*M*PEOPLE_DENSITY);
+	
 	int EXIT_X=0;
-	int EXIT_Y=25;
-	int VIEW_NUMBER=4;
-	int VIEW_ANGLE=60;
-	int VIEW_RANGE=10;
+	int EXIT_LONG=3;
+	int EXIT_Y_HALF=25;
+	int EXIT_Y_LEFT=EXIT_Y_HALF-1;
+	int EXIT_Y_RIGHT=EXIT_Y_HALF+1;
+	
+	int VIEW_NUMBER=5;
+	int VIEW_ANGLE=30;
+	int VIEW_RANGE=5;
 	int LOGO_PEOPLE=1;
 	int LOGO_WALL=10;
 	int LOGO_EXIT=100;
