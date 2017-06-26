@@ -1,6 +1,10 @@
 package CA;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Block {
+	int uid;
 	int x;
 	int y;
 	int logo;
@@ -13,11 +17,31 @@ public class Block {
 	boolean isSeeExit;//行人是否看到过出口，false为没见过，TRUE为见过
 	double isChangeClock;//行人是否已经改变过方向偏好 false为没改过 TRUE为改过
 						//isChangeClock只对行人产生的方向偏好有关 与记忆点收益无关
-	double isChangeClockView;
+	
+	int isChangePerView;
+	
+	double wightClock;//顺时针偏好收益
+	double wightUnClock;//逆时针偏好收益
+	
+	boolean inWall;//行人是否在墙壁附近
+	boolean isChangeWallInCome;//在刚进入墙壁附近时，已经判断过附近行人方向了
+	boolean isChangePerForOther;//是否有其他人改变过方向偏好
+	
+	Map<Integer,Double> cMap=new HashMap<>();
+	
 	public Block(int logo) {
 		
 		this.logo=logo;
 	}
+	
+	public int getUid() {
+		return uid;
+	}
+
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+
 	public int getX() {
 		return x;
 	}
@@ -74,17 +98,68 @@ public class Block {
 	}
 	
 	
-	public double getIsChangeClockView() {
-		return isChangeClockView;
-	}
-	public void setIsChangeClockView(double isChangeClockView) {
-		this.isChangeClockView = isChangeClockView;
-	}
 	public double getIsChangeClock() {
 		return isChangeClock;
 	}
 	public void setIsChangeClock(double isChangeClock) {
 		this.isChangeClock = isChangeClock;
 	}
+
+	public double getWightClock() {
+		return wightClock;
+	}
+
+	public void setWightClock(double wightClock) {
+		this.wightClock = wightClock;
+	}
+
+	public double getWightUnClock() {
+		return wightUnClock;
+	}
+
+	public void setWightUnClock(double wightUnClock) {
+		this.wightUnClock = wightUnClock;
+	}
+
+	public boolean isInWall() {
+		return inWall;
+	}
+
+	public void setInWall(boolean inWall) {
+		this.inWall = inWall;
+	}
+
+	public Map<Integer, Double> getcMap() {
+		return cMap;
+	}
+
+	public void setcMap(Map<Integer, Double> cMap) {
+		this.cMap = cMap;
+	}
+
+	public boolean isChangeWallInCome() {
+		return isChangeWallInCome;
+	}
+
+	public void setChangeWallInCome(boolean isChangeWallInCome) {
+		this.isChangeWallInCome = isChangeWallInCome;
+	}
+
+	public boolean isChangePerForOther() {
+		return isChangePerForOther;
+	}
+
+	public void setChangePerForOther(boolean isChangePerForOther) {
+		this.isChangePerForOther = isChangePerForOther;
+	}
+
+	public int getIsChangePerView() {
+		return isChangePerView;
+	}
+
+	public void setIsChangePerView(int isChangePerView) {
+		this.isChangePerView = isChangePerView;
+	}
+
 	
 }

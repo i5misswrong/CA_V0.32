@@ -21,76 +21,79 @@ public class PeopleInCome {
 		for(int i=0;i<m;i++){
 			for(int j=0;j<m;j++){
 				if(B[i][j].logo==data.LOGO_PEOPLE){
-					double parallel=j-dy;//与其他人的水平距离
-					double vertical=i-dx;//与其他人的垂直距离
-					if(Math.sqrt(parallel*parallel+vertical*vertical)<data.VIEW_RANGE){//如果在视野范围内
-						int quadrat=judeQuadrat(parallel, vertical);//判断与其他人的象限
-						double theta=countAngelPeopleAndExit(quadrat, parallel, vertical);//计算与其他人的角度
-						int othersA=judgeAngleAndTheta(theta);//行人数量收益
-						switch (othersA) {
-						case 1:
-							pni.put(1, pni.get(1)+1);
-							break;
-						case 2:
-							pni.put(2, pni.get(2)+1);
-							break;
-						case 3:
-							pni.put(3, pni.get(3)+1);
-							break;
-						case 4:
-							pni.put(4, pni.get(4)+1);
-							break;
-						case 5:
-							pni.put(5, pni.get(5)+1);
-							break;
-						case 6:
-							pni.put(6, pni.get(6)+1);
-							break;
-						case 7:
-							pni.put(7, pni.get(7)+1);
-							break;
-						case 8:
-							pni.put(8, pni.get(8)+1);
-							break;
-						case 9:
-							pni.put(9, pni.get(9)+1);
-							break;
-						default:
-							break;
-						}
-						int othersD=B[i][j].getDirection();//行人方向收益
-						switch (othersD) {
-						case 1:
-							pdi.put(1, pdi.get(1)+1);
-							break;
-						case 2:
-							pdi.put(2, pdi.get(2)+1);
-							break;
-						case 3:
-							pdi.put(3, pdi.get(3)+1);
-							break;
-						case 4:
-							pdi.put(4, pdi.get(4)+1);
-							break;
-						case 5:
-							pdi.put(5, pdi.get(5)+1);
-							break;
-						case 6:
-							pdi.put(6, pdi.get(6)+1);
-							break;
-						case 7:
-							pdi.put(7, pdi.get(7)+1);
-							break;
-						case 8:
-							pdi.put(8, pdi.get(8)+1);
-							break;
-						case 9:
-							pdi.put(9, pdi.get(9)+1);
-							break;
-						default:
-							break;
+					if(B[i][i].getDirection()!=5){
+						double parallel=j-dy;//与其他人的水平距离
+						double vertical=i-dx;//与其他人的垂直距离
+						if(Math.sqrt(parallel*parallel+vertical*vertical)<data.VIEW_RANGE){//如果在视野范围内
+							int quadrat=judeQuadrat(parallel, vertical);//判断与其他人的象限
+							double theta=countAngelPeopleAndExit(quadrat, parallel, vertical);//计算与其他人的角度
+							int othersA=judgeAngleAndTheta(theta);//行人数量收益
+							switch (othersA) {
+							case 1:
+								pni.put(1, pni.get(1)+1);
+								break;
+							case 2:
+								pni.put(2, pni.get(2)+1);
+								break;
+							case 3:
+								pni.put(3, pni.get(3)+1);
+								break;
+							case 4:
+								pni.put(4, pni.get(4)+1);
+								break;
+							case 5:
+								pni.put(5, pni.get(5)+1);
+								break;
+							case 6:
+								pni.put(6, pni.get(6)+1);
+								break;
+							case 7:
+								pni.put(7, pni.get(7)+1);
+								break;
+							case 8:
+								pni.put(8, pni.get(8)+1);
+								break;
+							case 9:
+								pni.put(9, pni.get(9)+1);
+								break;
+							default:
+								break;
+							}
+							int othersD=B[i][j].getDirection();//行人方向收益
+							switch (othersD) {
+							case 1:
+								pdi.put(1, pdi.get(1)+1);
+								break;
+							case 2:
+								pdi.put(2, pdi.get(2)+1);
+								break;
+							case 3:
+								pdi.put(3, pdi.get(3)+1);
+								break;
+							case 4:
+								pdi.put(4, pdi.get(4)+1);
+								break;
+							case 5:
+								pdi.put(5, pdi.get(5)+1);
+								break;
+							case 6:
+								pdi.put(6, pdi.get(6)+1);
+								break;
+							case 7:
+								pdi.put(7, pdi.get(7)+1);
+								break;
+							case 8:
+								pdi.put(8, pdi.get(8)+1);
+								break;
+							case 9:
+								pdi.put(9, pdi.get(9)+1);
+								break;
+							default:
+								break;
+							}
 						}
 					}
+					
 					
 				}
 			}
@@ -98,6 +101,7 @@ public class PeopleInCome {
 		}
 		for(int i=0;i<10;i++){//将收益加起来
 			peoInCome.put(i,(pni.get(i)+pdi.get(i))/(data.VIEW_RANGE*data.VIEW_RANGE));
+			//System.out.println((pni.get(i)+pdi.get(i))/(data.VIEW_RANGE*data.VIEW_RANGE));
 		}
 		return peoInCome;//返回行人收益map
 		
