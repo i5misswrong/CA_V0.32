@@ -30,7 +30,7 @@ public class WallInCome {
 				}
 			}
 			else if(B[dx][dy].getRealAngle()==666){//如果该行人 是被其他行人改变方向的
-				
+				changeOthers(B, dx, dy);//改变旁边的人
 			}
 			else{//如果改行人见过记忆点
 				countClockInComeWithView(B, dx, dy);//使用记忆点收益
@@ -144,7 +144,7 @@ public class WallInCome {
 				int wallArea=judgeWallArea(dx, dy);//在那个墙附近
 				switch (wallArea) {
 				case 1:
-					if(theta<90 | theta>270){
+					if(theta<180 | theta>270){
 						B[dx][dy].setClock(false);
 					}
 					else{
@@ -176,17 +176,24 @@ public class WallInCome {
 					}
 					break;
 				case 12:
-					if(B[dx][dy].getRealAngle()>=270 & B[dx][dy].getRealAngle()<360){
-						B[dx][dy].setRealAngle(999);
-					}
-					else{
-						if(theta<325 | theta>135){
+//					if(B[dx][dy].getRealAngle()>=270 & B[dx][dy].getRealAngle()<360){
+//						B[dx][dy].setRealAngle(999);
+//					}
+//					else{
+						if(isInRange(B, dx, dy)){
 							B[dx][dy].setClock(false);
+							B[dx][dy].setRealAngle(666);
 						}
 						else{
-							B[dx][dy].setClock(true);
+							
 						}
-					}
+//						if(theta<325 | theta>135){
+//							B[dx][dy].setClock(false);
+//						}
+//						else{
+//							B[dx][dy].setClock(true);
+//						}
+//					}
 					
 					break;
 				case 23://如果行人位于右上角
@@ -195,14 +202,21 @@ public class WallInCome {
 						//会出现 行人在左边见过记忆点  但是突然跑到右边墙壁 记忆角完全错误 如果在0-90内，会一直徘徊
 					}
 					else{
-						if(theta>90 & theta<270){
+						if(isInRange(B, dx, dy)){
 							B[dx][dy].setClock(false);
+							B[dx][dy].setRealAngle(666);
 						}
 						else{
-							B[dx][dy].setClock(true);
+							
 						}
-						int ac=B[dx][dy].getIsChangePerView();//这里忘了、、
-						B[dx][dy].setIsChangePerView(ac+1);
+//						if(theta>90 & theta<270){
+//							B[dx][dy].setClock(false);
+//						}
+//						else{
+//							B[dx][dy].setClock(true);
+//						}
+//						int ac=B[dx][dy].getIsChangePerView();//这里忘了、、
+//						B[dx][dy].setIsChangePerView(ac+1);
 					}
 					break;
 				case 34:
@@ -210,14 +224,21 @@ public class WallInCome {
 							B[dx][dy].setRealAngle(999);
 						}
 						else{
-							if(theta>180){
-								B[dx][dy].setClock(false);
+							if(isInRange(B, dx, dy)){
+								B[dx][dy].setClock(true);
+								B[dx][dy].setRealAngle(666);
 							}
 							else{
-								B[dx][dy].setClock(true);
+								
 							}
-							int ac=B[dx][dy].getIsChangePerView();
-							B[dx][dy].setIsChangePerView(ac+1);
+//							if(theta>180){
+//								B[dx][dy].setClock(false);
+//							}
+//							else{
+//								B[dx][dy].setClock(true);
+//							}
+//							int ac=B[dx][dy].getIsChangePerView();
+//							B[dx][dy].setIsChangePerView(ac+1);
 						}
 						
 					
@@ -227,12 +248,19 @@ public class WallInCome {
 						B[dx][dy].setRealAngle(999);
 					}
 					else{
-						if(theta<45 | theta>325){
-							B[dx][dy].setClock(false);
+						if(isInRange(B, dx, dy)){
+							B[dx][dy].setClock(true);
+							B[dx][dy].setRealAngle(666);
 						}
 						else{
-							B[dx][dy].setClock(true);
+							
 						}
+//						if(theta<45 | theta>325){
+//							B[dx][dy].setClock(false);
+//						}
+//						else{
+//							B[dx][dy].setClock(true);
+//						}
 					}
 					
 					break;
@@ -430,8 +458,8 @@ public class WallInCome {
 	}
 	//--------------------看见过记忆点的行人改变其他人的方向偏好------------
 	public void changeOthers(Block B[][],int dx,int dy){
-		double rom=Math.random()-0.5;//产生一个正负0.5的随机数
-			boolean preference=B[dx][dy].isClock();//行人方向偏好
+		
+//			boolean preference=B[dx][dy].isClock();//行人方向偏好
 			for(int i=dx-1;i<dx+1;i++){//遍历行人周围的8个格子
 				for(int j=dy-1;j<dy+1;j++){
 					if((i<1 | i>data.M-1 | j<1 | j>data.M-1)){//越界处理
@@ -440,8 +468,9 @@ public class WallInCome {
 					else{
 						if(B[i][j].getLogo()==data.LOGO_PEOPLE){//如果是行人
 							//如果该行人见过记忆点了   此处可能有问题
-							if(B[dx][dy].getRealAngle()!=999 & B[dx][dy].getRealAngle()!=666){
-								if(preference){//如果他是顺时针移动
+							if(B[dx][dy].getRealAngle()!=999){
+								double rom=Math.random()-0.5;//产生一个正负0.5的随机数
+								if(B[dx][dy].clock){//如果他是顺时针移动
 									if(rom>0){//有50%的概率
 										B[i][j].setClock(true);//将周围行人设置为TRUE
 										B[i][j].setChangePerForOther(true);//设置 已经由其他行人改变过偏好了

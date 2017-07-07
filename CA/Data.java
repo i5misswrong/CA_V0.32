@@ -3,7 +3,7 @@ package CA;
 public class Data {
 	int M=50;
 	
-	double PEOPLE_DENSITY=0.8;
+	double PEOPLE_DENSITY=0.3;
 	int sh=19;
 	int PEOPLE_NUMBER=(int) (M*M*PEOPLE_DENSITY);
 	
@@ -15,8 +15,8 @@ public class Data {
 	
 	int VIEW_NUMBER=5;
 	
-	int VIEW_ANGLE=60;//记忆角
-	int VIEW_RANGE=6;//视野半径
+	int VIEW_ANGLE=45;//记忆角
+	int VIEW_RANGE=8;//视野半径
 	
 	int LOGO_PEOPLE=1;
 	int LOGO_WALL=10;
